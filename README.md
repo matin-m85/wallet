@@ -121,5 +121,3 @@ After all services are running → Gateway automatically connects to them.
 - Perfect for learning microservices with Go  
 
 ---
-
-Just tell me 😉
