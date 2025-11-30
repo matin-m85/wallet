@@ -1,0 +1,42 @@
+package config
+
+import (
+	"fmt"
+	"os"
+)
+
+type Config struct {
+	DBHost     string
+	DBPort     string
+	DBUser     string
+	DBPassword string
+	DBName     string
+	Port       string
+	WalletURL  string
+}
+
+func LoadConfig() *Config {
+	return &Config{
+		DBHost:     getEnv("DB_HOST", "gift-db"),
+		DBPort:     getEnv("DB_PORT", "5432"),
+		DBUser:     getEnv("DB_USER", "postgres"),
+		DBPassword: getEnv("DB_PASSWORD", "password"),
+		DBName:     getEnv("DB_NAME", "gift_db"),
+		Port:       getEnv("PORT", "8082"),
+		WalletURL:  getEnv("WALLET_URL", "http://wallet-service:8081"),
+	}
+}
+
+func getEnv(key, defaultValue string) string {
+	if v := os.Getenv(key); v != "" {
+		return v
+	}
+	return defaultValue
+}
+
+func (c *Config) GetDSN() string {
+	return fmt.Sprintf(
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
+		c.DBHost, c.DBUser, c.DBPassword, c.DBName, c.DBPort,
+	)
+}

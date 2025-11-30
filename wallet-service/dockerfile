@@ -1,0 +1,38 @@
+# ==============================
+# 💰 Dockerfile for Wallet Service
+# ==============================
+
+# 🧱 Stage 1: Build Go binary
+FROM docker.arvancloud.ir/golang:1.24.2 AS builder
+
+WORKDIR /app
+
+# 📚 Copy dependencies for better caching
+COPY go.mod go.sum ./
+RUN go mod download
+
+# 📥 Copy full source
+COPY . .
+
+# ⚙️ Build static binary for Alpine
+ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64
+RUN go build -o wallet-service ./cmd/main.go
+
+# ==============================
+# 🪶 Stage 2: Runtime
+# ==============================
+FROM docker.arvancloud.ir/alpine:latest
+
+WORKDIR /app
+
+# 📦 Copy compiled binary
+COPY --from=builder /app/wallet-service .
+
+# 🔐 Make executable
+RUN chmod +x /app/wallet-service
+
+# 🌐 Expose port
+EXPOSE 8081
+
+# 🚀 Start service
+CMD ["./wallet-service"]

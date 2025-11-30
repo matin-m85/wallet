@@ -1,0 +1,38 @@
+# ==============================
+# 📦 Dockerfile for API Gateway
+# ==============================
+
+# 🧱 Stage 1: Build Go binary
+FROM docker.arvancloud.ir/golang:1.24.2 AS builder
+
+WORKDIR /app
+
+# 📚 Download Go dependencies
+COPY go.mod go.sum ./
+RUN go mod download
+
+# 📥 Copy source code
+COPY . .
+
+# ⚙️ Build binary
+ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64
+RUN go build -o api-gateway ./cmd/main.go
+
+# ==============================
+# 🪶 Stage 2: Runtime
+# ==============================
+FROM docker.arvancloud.ir/alpine:latest
+
+WORKDIR /app
+
+# 📦 Copy compiled binary
+COPY --from=builder /app/api-gateway .
+
+# 🔐 Make executable
+RUN chmod +x ./api-gateway
+
+# 🌐 Expose port
+EXPOSE 8080
+
+# 🚀 Run service
+CMD ["./api-gateway"]

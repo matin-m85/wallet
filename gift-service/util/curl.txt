@@ -1,0 +1,49 @@
+🎁 1) Create a Gift Card Group (e.g., Yalda)
+
+ccurl -X POST http://localhost:8082/gift/group/create \
+-H "Content-Type: application/json" \
+-d '{"name":"salamat","amount_due":50000,"count":10}'
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+🎁 2) Use a Gift Card
+
+ccurl -X POST http://localhost:8082/gift/use \
+-H "Content-Type: application/json" \
+-d '{"code":"SALA-MLC9DBGY","phone":"111"}'
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+🧾 3) Group Statistics Report
+
+ccurl -X GET http://localhost:8082/gift/group/b2f803e6-56a1-4502-857c-32164fae91bd/stats
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+📜 4) List of Users Who Used Gift Cards
+
+ccurl -X GET http://localhost:8082/gift/group/b2f803e6-56a1-4502-857c-32164fae91bd/users
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+🔍 5) Get Gift Card Information
+
+ccurl -X GET http://localhost:8082/gift/card/SALA-MLC9DBGY
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+📋 6) List All Groups with Statistics
+
+ccurl -X GET http://localhost:8082/gift/group/list
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+🧾 7) List All Codes in a Group
+
+ccurl -X GET http://localhost:8082/gift/group/b2f803e6-56a1-4502-857c-32164fae91bd/codes

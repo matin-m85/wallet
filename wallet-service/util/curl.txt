@@ -1,0 +1,35 @@
+🧱 1) Create New Wallet
+
+ccurl -X POST http://localhost:8081/wallet \
+-H "Content-Type: application/json" \
+-d '{"phone":"09123456789"}'
+
+
+///////////////////////////////////////////////////////////////////////////////////
+
+➕ 2) Add Balance
+
+ccurl -X POST http://localhost:8081/wallet/add \
+-H "Content-Type: application/json" \
+-d '{"phone":"09123456789","amount":1000000,"reference":"test"}'
+
+
+///////////////////////////////////////////////////////////////////////////////////
+
+🔎 3) Get Wallet Info
+
+ccurl -X GET http://localhost:8081/wallet/09123456789
+
+
+///////////////////////////////////////////////////////////////////////////////////
+
+📜 4) Get Wallet Transactions
+
+ccurl -X GET http://localhost:8081/wallet/09123456789/transactions
+
+
+///////////////////////////////////////////////////////////////////////////////////
+
+📋 5) List all wallets
+
+ccurl http://localhost:8081/wallet/list

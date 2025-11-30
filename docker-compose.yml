@@ -1,0 +1,94 @@
+version: "3.8"
+
+services:
+
+  # -------------------------------------------
+  # 💰 PostgreSQL Database for Wallet Service
+  # -------------------------------------------
+  wallet-db:
+    image: docker.arvancloud.ir/postgres:16
+    container_name: wallet-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: wallet_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - wallet_data:/var/lib/postgresql/data
+
+  # -------------------------------------------
+  # 💸 Wallet Service (Go)
+  # -------------------------------------------
+  wallet-service:
+    build: ./wallet-service
+    container_name: wallet-service
+    restart: always
+    depends_on:
+      - wallet-db
+    environment:
+      DB_HOST: wallet-db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_NAME: wallet_db
+      PORT: 8081
+    ports:
+      - "8081:8081"
+
+  # -------------------------------------------
+  # 🎁 PostgreSQL Database for Gift Service
+  # -------------------------------------------
+  gift-db:
+    image: docker.arvancloud.ir/postgres:16
+    container_name: gift-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: gift_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - gift_data:/var/lib/postgresql/data
+
+  # -------------------------------------------
+  # 🎀 Gift Service (Go)
+  # -------------------------------------------
+  gift-service:
+    build: ./gift-service
+    container_name: gift-service
+    restart: always
+    depends_on:
+      - gift-db
+    environment:
+      DB_HOST: gift-db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_NAME: gift_db
+      PORT: 8082
+    ports:
+      - "8082:8082"
+
+  # -------------------------------------------
+  # 🚪 API Gateway (Go)
+  # -------------------------------------------
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    restart: always
+    depends_on:
+      - wallet-service
+      - gift-service
+    environment:
+      WALLET_URL: http://wallet-service:8081
+      GIFT_URL: http://gift-service:8082
+      PORT: 8080
+    ports:
+      - "8080:8080"
+
+volumes:
+  wallet_data:
+  gift_data:
