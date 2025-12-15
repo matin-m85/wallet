@@ -1,77 +1,69 @@
-🧱 1) Create New Wallet
+## 🔌 Wallet API Endpoints
 
-ccurl -X POST http://localhost:8080/api/wallet \
+### 🧱 1) Create New Wallet
+curl -X POST http://localhost:8080/api/wallet \
   -H "Content-Type: application/json" \
-  -d '{"phone":"0397462616"}'
+  -d '{"phone":"09123456789"}'
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-➕ 2) Add Balance
-
-ccurl -X POST http://localhost:8080/api/wallet/add \
+### ➕ 2) Add Balance
+curl -X POST http://localhost:8080/api/wallet/add \
   -H "Content-Type: application/json" \
-  -d '{"phone":"0397462616","amount":1000000,"reference":"test"}'
+  -d '{"phone":"09123456789","amount":1000000,"reference":"test"}'
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-🔎 3) Get Wallet Info
-
-ccurl -X GET http://localhost:8080/api/wallet/0397462616
-
-///////////////////////////////////////////////////////////////////////////////////
-
-📜 4) Get Wallet Transactions
-
-ccurl -X GET http://localhost:8080/api/wallet/09123456789/transactions
+### 🔎 3) Get Wallet Info
+curl -X GET http://localhost:8080/api/wallet/09123456789
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-📋 5) List all wallets
-
-ccurl -X GET http://localhost:8080/api/wallet/list
+### 📜 4) Get Wallet Transactions
+curl -X GET http://localhost:8080/api/wallet/09123456789/transactions
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-🎁 1) Create a Gift Card Group (e.g., Yalda)
+### 📋 5) List All Wallets
+curl -X GET http://localhost:8080/api/wallet/list
 
-ccurl -X POST http://localhost:8080/api/group/create \
+///////////////////////////////////////////////////////////////////////////////////
+
+## 🔌 Gift Code API Endpoints
+
+### 🎁 1) Create a Gift Code Group (e.g., Yalda)
+curl -X POST http://localhost:8080/api/group/create \
   -H "Content-Type: application/json" \
-  -d '{"name":"hhhh","amount_due":50000,"count":10}'
+  -d '{"name":"yalda","amount_due":50000,"count":10}'
 
-/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
-🎁 2) Use a Gift Card
-
-ccurl -X POST http://localhost:8080/api/use \
+### 🎁 2) Use a Gift Code
+curl -X POST http://localhost:8080/api/use \
   -H "Content-Type: application/json" \
-  -d '{"code":"HHHH-LJ4XGID4","phone":"0397462616"}'
+  -d '{"code":"YOUR_GIFT_CODE_HERE","phone":"09123456789"}'
 
-/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
-🧾 3) Group Statistics Report
+### 🧾 3) Group Statistics Report
+curl -X GET http://localhost:8080/api/group/YOUR_GROUP_ID_HERE/stats
 
-ccurl -X GET http://localhost:8080/api/group/be6cf7b3-b569-457c-a32c-9ee0706dad11/stats
+///////////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////////////
+### 📜 4) List of Users Who Redeemed Gift Codes
+curl -X GET http://localhost:8080/api/group/YOUR_GROUP_ID_HERE/users
 
-📜 4) List of Users Who Used Gift Cards
+///////////////////////////////////////////////////////////////////////////////////
 
-ccurl -X GET http://localhost:8080/api/group/be6cf7b3-b569-457c-a32c-9ee0706dad11/users
+### 🔍 5) Get Gift Code Information
+curl -X GET http://localhost:8080/api/card/YOUR_GIFT_CODE_HERE
 
-/////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
-🔍 5) Get Gift Card Information
+### 📋 6) List All Groups with Statistics
+curl -X GET http://localhost:8080/api/group/list
 
-ccurl -X GET http://localhost:8080/api/card/YALD-1BCK3SWF
+///////////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////////////
-
-📋 6) List All Groups with Statistics
-
-ccurl -X GET http://localhost:8080/api/group/list
-
-/////////////////////////////////////////////////////////////////////////////////////
-
-🧾 7) List All Codes in a Group
-
-ccurl -X GET http://localhost:8080/api/group/fdfe6ed3-583a-45ce-b61f-abd9701edc57/codes
+### 🧾 7) List All Codes in a Group
+curl -X GET http://localhost:8080/api/group/YOUR_GROUP_ID_HERE/codes
