@@ -119,74 +119,6 @@ or all together using **Docker Compose (recommended)**.
 - Perfect for learning microservices with Go  
 
 ---
-## 📁 Project Structure
-
-The project follows a clean and easy-to-navigate microservices architecture:
-
-app/
-├─ wallet-service/
-│  ├─ cmd/
-│  │  └─ main.go
-│  ├─ config/
-│  │  └─ config.go
-│  └─ internal/
-│     ├─ models/
-│     │  ├─ wallet.go
-│     │  └─ transaction.go
-│     ├─ repository/
-│     │  ├─ db.go
-│     │  ├─ wallet_repository.go
-│     │  └─ transaction_repository.go
-│     ├─ service/
-│     │  └─ wallet_service.go
-│     └─ api/
-│        ├─ controllers/
-│        │  └─ wallet_controller.go
-│        ├─ routes/
-│        │  └─ routes.go
-│        └─ server.go
-│
-├─ gift-service/
-│  ├─ cmd/
-│  │  └─ main.go
-│  ├─ config/
-│  │  └─ config.go
-│  └─ internal/
-│     ├─ models/
-│     │  |─ gift_group.go
-|     |  └─ giftـcard.go
-│     ├─ repository/
-│     │  ├─ db.go
-│     │  |─ gift_card_repo.go
-│     │  └─ gift_group_repo.go
-│     ├─ service/
-│     │  └─ gift_service.go
-│     └─ api/
-│        ├─ controllers/
-│        │  └─ gift_controller.go
-│        ├─ routes/
-│        │  └─ routes.go
-│        └─ server.go
-│
-└─ api-gateway/
-   ├─ cmd/
-   │  └─ main.go
-   ├─ config/
-   │  └─ config.go
-   └─ internal/
-      ├─ client/
-      │  ├─ wallet_client.go
-      │  └─ gift_client.go
-      ├─ service/
-      │  └─ gateway_service.go
-      └─ api/
-         ├─ controllers/
-         │  └─ gateway_controller.go
-         ├─ routes/
-         │  └─ routes.go
-         └─ server.go
-
-----
 
 ## 🔌 Wallet API Endpoints
 
@@ -249,7 +181,7 @@ curl -X GET http://localhost:8080/api/group/YOUR_GROUP_ID_HERE/codes
 
 ---
 
-# ▶️ How to Run the Project (Docker-Based)
+## ▶️ How to Run the Project (Docker-Based)
 
 This project is fully **Dockerized** 🐳 and designed to run all services together using **Docker Compose**.
 
